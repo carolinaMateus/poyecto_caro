@@ -1,0 +1,54 @@
+<mat-tab-group>
+  <mat-tab [label]="titulo">
+    <form [formGroup]="form" autocomplete="off">
+      <mat-card class="shipping-card">
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="example-full-width">
+                <mat-label>nombres</mat-label>
+                <input type="text" matInput formControlName="nombres" placeholder="Ex. Juan" [(ngModel)]=dto.nombres [disabled]="disabled">
+                <mat-error *ngIf="form.controls['correo'].hasError('required')">
+                  Valor <strong>requiredo</strong>
+                </mat-error>
+                <div *ngIf="form.controls['codigo'].hasError('api')">
+                  <mat-error *ngFor="let error of errors['Codigo']">
+                    {{error}}
+                  </mat-error>
+                </div>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="example-full-width">
+                <mat-label>Apellidos</mat-label>
+                <input type="text" matInput formControlName="apellidos" placeholder="Ex. Bautista" [(ngModel)]=dto.apellidos [disabled]="disabled">
+                <mat-error *ngIf="form.controls['correo'].hasError('required')">
+                  Valor <strong>requiredo</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <mat-form-field class="example-full-width">
+              <mat-label>Correo</mat-label>
+              <input type="email" matInput formControlName="correo" placeholder="Ex. pat@example.com" [(ngModel)]=dto.correo [disabled]="disabled">
+              <mat-error
+                *ngIf="form.controls['correo'].hasError('pattern')">
+                Por favor ingrese un correo válido
+              </mat-error>
+              <mat-error *ngIf="form.controls['correo'].hasError('required')">
+                Valor <strong>requiredo</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button *ngIf="mode === 'add' && !disabled" mat-raised-button color="primary" (click)='save()'
+            [disabled]="!form.valid">Guardar</button>
+          <button *ngIf="mode === 'edit' && !disabled" mat-raised-button color="primary" (click)='edit()'
+            [disabled]="!form.valid">Actualizar</button>
+            <button *ngIf="mode === 'delete'" mat-raised-button color="warn" (click)='delete()'>Eliminar</button>
+          <button mat-raised-button color="warn" (click)='close()'>Cancelar</button>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </mat-tab>
+</mat-tab-group>
